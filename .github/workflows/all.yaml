@@ -8,3 +8,6 @@ on:
 jobs:
   test_django:
     uses: ./.github/workflows/test-django.yaml
+  build_container:
+    needs: test_django
+    uses: ./.github/workflows/container.yaml
