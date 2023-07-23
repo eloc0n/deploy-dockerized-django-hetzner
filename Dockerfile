@@ -30,7 +30,7 @@ RUN python3.8 -m venv /opt/virtualenv
 
 # Install requirements to new virtual environment
 # requirements.txt must have gunicorn & django
-RUN /opt/venv/bin/pip install -r requirements.txt && \
+RUN /opt/virtualenv/bin/pip install -r requirements.txt && \
     chmod +x config/entrypoint.sh
 
 # entrypoint.sh to run our gunicorn instance
