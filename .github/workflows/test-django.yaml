@@ -19,7 +19,7 @@ jobs:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST: localhost # default host value for the database
-      POSTGRES_NAME: djtesting
+      POSTGRES_DB: djtesting
       POSTGRES_PORT: 5432
       GITHUB_ACTIONS: true
       DJANGO_SECRET_KEY: test-key-not-good
@@ -30,7 +30,7 @@ jobs:
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          POSTGRES_NAME: ${{ env.POSTGRES_NAME }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
