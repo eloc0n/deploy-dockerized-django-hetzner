@@ -13,8 +13,9 @@ WORKDIR /app
 # os requirements to ensure this
 # Django project runs with postgresql
 # along with a few other deps
-RUN apt-get update && \
-    apt-get install -y \ 
+RUN apk update \
+    && apk --update add \
+    bash \ 
     locales \
     libmemcached-dev \ 
     libpq-dev \ 
