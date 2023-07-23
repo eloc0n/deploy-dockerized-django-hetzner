@@ -14,20 +14,11 @@ WORKDIR /app
 # Django project runs with postgresql
 # along with a few other deps
 RUN apk update \
-    && apk --update add \
-    bash \ 
-    locales \
-    libmemcached-dev \ 
-    libpq-dev \ 
-    libjpeg-dev \
-    zlib1g-dev \
-    build-essential \
-    python3-dev \
-    python3-setuptools \
-    gcc \
-    make && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    && apk --update add bash jq curl ca-certificates \
+    py-openssl py3-psycopg2 postgresql-dev jpeg-dev \
+    musl-dev libffi-dev libressl-dev build-base \
+    make gcc g++ libxml2-dev libxslt-dev gettext git \
+    && rm -rf /var/cache/apk
 
 ENV PYTHON_VERSION=3.8
 ENV DEBIAN_FRONTEND noninteractive
