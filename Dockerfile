@@ -18,7 +18,6 @@ RUN apk update \
     py-openssl py3-psycopg2 postgresql-dev jpeg-dev \
     musl-dev libffi-dev libressl-dev build-base \
     make gcc g++ libxml2-dev libxslt-dev gettext git \
-    && pip install --upgrade pip \
     && rm -rf /var/cache/apk
 
 ENV PYTHON_VERSION=3.8
@@ -30,7 +29,8 @@ RUN python3.8 -m venv /opt/virtualenv
 
 # Install requirements to new virtual environment
 # requirements.txt must have gunicorn & django
-RUN /opt/virtualenv/bin/pip install -r requirements.txt && \
+RUN /opt/virtualenv/bin/pip install pip --upgrade && \
+    /opt/virtualenv/bin/pip install -r requirements.txt && \
     chmod +x config/entrypoint.sh
 
 # entrypoint.sh to run our gunicorn instance
