@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giannis Bratias | Web Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+</head>
+<body>
+    {% for link in socials %}
+        <a href="mailto:{{ link.email }}" class="contact"><strong>Contact</strong> </a>
+        
+        <nav class="nav">
+            <ul>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="{{ link.github }}" target="blank_"><i class="fab fa-github"></i></a></li>
+                <li><a href="{{ link.linkedin }}" target="blank_"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="{{ link.resume.url }}" target="blank_"><i class="fas fa-file-signature"></i></a></li>
+            </ul>
+        </nav>
+    {% endfor %}
+
+    
+
+    <header class="v-header container">
+        <div class="fullscreen-video-wrap">
+            {% for video in videos %}
+                <video src="{{ video.videofile.url }}" autoplay="" loop=""></video>
+            {% endfor %}
+        </div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+          <h1>Hello,<br>I am Giannis Bratias</h1>
+          <p>Self taught Web Developer based in Athens, Greece</p>
+          <a class="btn" href="#projects">Find Out More</a>
+        </div>
+    </header>
+    
+    <section id="projects" class="section">
+        <div class="container">
+            <h2>Things I've built</h2>
+            <div class="card">
+                {% if projects %}
+                    {% for project in projects %}
+                        <div class="card-content">
+                            <a href="{{ project.live_demo }}" target="blank_">
+                                <img class="card-img" src="{{ project.photo.url }}" alt="{{ project.name }}">
+                            </a>
+                            <p>
+                                {{ project.description }}
+                            </p>
+                            <ul>
+                                {% for technology in project.technologies.all %}
+                                    <li class="content-skills"> {{ technology }} </li>
+                                {%endfor%}
+                            </ul>
+                            <a class="btn btn-card" href="{{ project.github }}" 
+                            target="blank_"><i class="fab fa-github"></i></a>
+                            <a class="btn btn-card" href="{{ project.live_demo }}" 
+                            target="blank_"><i class="fas fa-external-link-square-alt"></i></a>
+                            
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nothing to see here</p>
+                {% endif %}
+                
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-get-in-touch">
+        <div class="container">
+            <h1>Get in touch</h1>
+            {% for link in socials %}
+                <a href="mailto:{{ link.email }}" class="get-in-touch">
+                    <h2>{{ link.email }}</h2>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <footer class="section section-footer">
+        <div class="container">
+            <ul class="footer">
+                {% for link in socials %}
+                    <li><a href="{{ link.github }}" target="blank_"><i class="fab fa-github"></i> Github</a></li>
+                    <li><a href="{{ link.linkedin }}" target="blank_"><i class="fab fa-linkedin"></i> Linkedin</a></li>
+                    <li><a href="{{ link.resume.url }}" target="blank_"><i class="fas fa-file-signature"></i> Resume / CV</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </footer>
+    
+</body>
+</html>
