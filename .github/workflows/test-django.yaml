@@ -1,4 +1,4 @@
-name: Postgres for Django Tests
+name: 1 - Django Tests
 
 # Controls when the workflow will run
 on:
@@ -44,18 +44,14 @@ jobs:
           --health-timeout 5s 
           --health-retries 5
 
-    # If you want to test multiple python version(s)
-    strategy:
-      matrix:
-        python-version: ["3.8"]
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup Python ${{ matrix.python-version }}
+      - name: Setup Python "3.8"
         uses: actions/setup-python@v3
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.8"
       - name: Install requirements
         run: |
           pip install -r requirements.txt
