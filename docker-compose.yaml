@@ -1,0 +1,51 @@
+version: "3.8"
+
+volumes:
+  portfolio_postgres_data:
+
+
+services:
+  postgres:
+    container_name: database
+    hostname: mas.database
+    image: postgres:12
+    restart: unless-stopped
+    volumes:
+      - portfolio_postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=8542
+      - POSTGRES_DB=mysite_v2_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  django:
+    container_name: application
+    hostname: mas.application
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+    image: ${DOCKER_IMAGE:-portfolio_django}
+    restart: unless-stopped
+    user: django
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    command: python manage.py runserver 0.0.0.0:8000
+    expose:
+      - "8000"
+    ports:
+      - "5050:5050"
+    volumes:
+      - .:/app
+      - ./logs:/logs

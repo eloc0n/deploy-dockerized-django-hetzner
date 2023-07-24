@@ -10,6 +10,12 @@ COPY . /app
 # files above into
 WORKDIR /app
 
+ARG UID
+ARG GID
+
+RUN addgroup -S django -g $GID \
+    && adduser -S django -u $UID -g $GID
+
 # os requirements to ensure this
 # Django project runs with postgresql
 # along with a few other deps
@@ -23,6 +29,18 @@ RUN apk update \
 ENV PYTHON_VERSION=3.8
 ENV DEBIAN_FRONTEND noninteractive
 
+# Permissions
+COPY --chown=django:django . /app
+COPY --chown=django:django config/entrypoint.sh /
+
+# Static files
+RUN mkdir -p /app/staticfiles
+RUN chown django:django /app/staticfiles
+
+# Logs
+RUN mkdir -p /logs
+RUN chown django:django /logs
+
 # Create a Python 3.8 virtual environment in /opt.
 # /opt: is the default location for additional software packages.
 RUN python3.8 -m venv /opt/virtualenv
@@ -33,5 +51,7 @@ RUN /opt/virtualenv/bin/pip install pip --upgrade && \
     /opt/virtualenv/bin/pip install -r requirements.txt && \
     chmod +x config/entrypoint.sh
 
+USER django
+
 # entrypoint.sh to run our gunicorn instance
-CMD [ "/app/config/entrypoint.sh" ]
+CMD [ "/entrypoint.sh" ]
