@@ -12,5 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build container image
-        run: |
-          docker build -f Dockerfile -t portfolio .
+        uses: docker/build-push-action@v3
+        with:
+          build-args: |
+            UID=1000
+            GID=1000
+        # run: |
+        #   docker build -f Dockerfile -t portfolio .
