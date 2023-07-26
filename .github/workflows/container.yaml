@@ -17,5 +17,3 @@ jobs:
           build-args: |
             UID=1000
             GID=1000
-        # run: |
-        #   docker build -f Dockerfile -t portfolio .
