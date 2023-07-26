@@ -2,9 +2,29 @@ version: "3.8"
 
 volumes:
   portfolio_postgres_data:
-
+  media:
+  static:
 
 services:
+  nginx:
+    container_name: portfolio_proxy
+    hostname: mas.proxy
+    build:
+      context: .
+      dockerfile: devops/nginx/Dockerfile
+      args:
+        HTPASSWD: "${HTPASSWD:-admin}"
+    restart: unless-stopped
+    depends_on:
+      - django
+    env_file:
+      - .env
+    ports:
+      - "8000:80"
+    volumes:
+      - media:/app/media
+      - static:/app/static
+
   postgres:
     container_name: portfolio_database
     hostname: mas.database
@@ -29,7 +49,7 @@ services:
     hostname: mas.application
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: devops/django/Dockerfile
       args:
         UID: "${UID:-1000}"
         GID: "${GID:-1000}"
@@ -45,7 +65,9 @@ services:
     expose:
       - "8000"
     ports:
-      - "5050:5050"
+      - "5060:5050"
     volumes:
       - .:/app
       - ./logs:/logs
+      - media:/app/media
+      - static:/app/static
