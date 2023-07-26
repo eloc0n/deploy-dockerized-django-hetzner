@@ -14,6 +14,7 @@ jobs:
       - name: Build container image
         uses: docker/build-push-action@v3
         with:
+          file: devops/django/Dockerfile
           build-args: |
             UID=1000
             GID=1000
