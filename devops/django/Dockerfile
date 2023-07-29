@@ -24,6 +24,7 @@ RUN apk update \
     py-openssl py3-psycopg2 postgresql-dev jpeg-dev \
     musl-dev libffi-dev libressl-dev build-base \
     make gcc g++ libxml2-dev libxslt-dev gettext git \
+    openssh-client  \
     && rm -rf /var/cache/apk
 
 ENV PYTHON_VERSION=3.8
@@ -31,6 +32,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Permissions
 COPY --chown=django:django . /app
+COPY --chown=django:django config/runserver.sh /
 COPY --chown=django:django config/entrypoint.sh /
 
 # Static files
