@@ -1,13 +1,16 @@
 #!/bin/bash
-cd /app/
 
-APP_PORT=${PORT:-8000}
+echo "Acticating environment"
+source /opt/virtualenv/bin/activate
+exec "$@"
 
-echo "Collecting static files..."
-/opt/virtualenv/bin/python manage.py collectstatic --noinput
+KEYGEN=/usr/bin/ssh-keygen
+KEYFILE=/root/.ssh/id_rsa
 
-echo "Running migrations..."
-/opt/virtualenv/bin/python manage.py migrate
+if [ ! -f $KEYFILE ]; then
+  $KEYGEN -q -t rsa -N "" -f $KEYFILE
+  cat $KEYFILE.pub >> /root/.ssh/authorized_keys
+fi
 
-echo "Starting the server..."
-/opt/virtualenv/bin/gunicorn --worker-tmp-dir /dev/shm mysite.wsgi:application --bind "0.0.0.0:${APP_PORT}"
+echo "== Use this private key to log in =="
+cat $KEYFILE

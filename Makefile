@@ -10,6 +10,14 @@ UID = $(shell id -u)
 build:
 	${DC} build --pull
 
+# Download database from remote
+get_db:
+	./scripts/download_db_from_remote.sh
+
+# Load dump database
+db:
+	${DC} run --rm django ./scripts/setup-database.sh
+
 # Start project.
 start:
 	${DC} up --remove-orphans
@@ -17,6 +25,12 @@ start:
 # Exec bash shell on django container.
 shell:
 	${DC} run --user ${UID} --rm django bash
+
+# Run shell_plus on django container.
+# To pass an argument run `make djshell arg=argument`.
+# Ex. `make djshell arg=--print-sql`.
+djshell:
+	${DC} run --rm django python manage.py shell_plus $(arg)
 
 # Run django tests.
 test:
