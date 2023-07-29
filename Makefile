@@ -10,6 +10,10 @@ UID = $(shell id -u)
 build:
 	${DC} build --pull
 
+# Download media from remote
+get_media:
+	./scripts/download_and_apply_media.sh
+
 # Download database from remote
 get_db:
 	./scripts/download_db_from_remote.sh
