@@ -126,3 +126,5 @@ tmp/
 .env
 env/
 virtualenv/
+.logs
+logs/
