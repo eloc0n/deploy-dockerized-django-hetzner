@@ -3,6 +3,8 @@ version: "3.8"
 services:
   nginx:
     restart: always
+    ports:
+      - "80:80"
     volumes:
       - ./nginx/nginx-production.conf:/nginx/nginx.conf
 
