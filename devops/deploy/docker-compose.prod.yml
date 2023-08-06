@@ -2,8 +2,10 @@ version: "3.8"
 
 services:
   nginx:
+    restart: always
     volumes:
       - ./nginx/nginx-production.conf:/nginx/nginx.conf
 
   django:
+    restart: always
     command: config/runserver.sh

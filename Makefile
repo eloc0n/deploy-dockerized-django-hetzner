@@ -22,6 +22,9 @@ get_db:
 db:
 	${DC} run --rm django ./scripts/setup-database.sh
 
+start-prod:
+	${DC} -f docker-compose.yaml -f devops/deploy/docker-compose.prod.yml up -d
+
 # Start project.
 start:
 	${DC} up --remove-orphans

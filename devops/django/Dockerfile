@@ -32,8 +32,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Permissions
 COPY --chown=django:django . /app
-COPY --chown=django:django config/runserver.sh /
-COPY --chown=django:django config/entrypoint.sh /
+COPY --chown=django:django devops/django/runserver.sh /
+COPY --chown=django:django devops/django/entrypoint.sh /
 
 # Static files
 RUN mkdir -p /app/staticfiles
@@ -54,5 +54,5 @@ RUN /opt/virtualenv/bin/pip install pip --upgrade && \
 
 USER django
 
-# entrypoint.sh to run our gunicorn instance
-ENTRYPOINT ["config/entrypoint.sh" ]
+# entrypoint.sh to activate environment
+ENTRYPOINT ["/entrypoint.sh" ]
