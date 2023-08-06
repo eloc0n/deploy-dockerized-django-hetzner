@@ -8,4 +8,4 @@ services:
 
   django:
     restart: always
-    command: config/runserver.sh
+    command: devops/django/runserver.sh
