@@ -4,3 +4,6 @@ services:
   nginx:
     volumes:
       - ./nginx/nginx-production.conf:/nginx/nginx.conf
+
+  django:
+    command: config/runserver.sh
