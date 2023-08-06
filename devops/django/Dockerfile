@@ -34,6 +34,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY --chown=django:django . /app
 COPY --chown=django:django devops/django/runserver.sh /
 COPY --chown=django:django devops/django/entrypoint.sh /
+RUN chown django:django /app/devops/django/runserver.sh
 
 # Static files
 RUN mkdir -p /app/staticfiles
