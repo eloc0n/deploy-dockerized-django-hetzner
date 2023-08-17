@@ -20,10 +20,19 @@ services:
     env_file:
       - .env
     ports:
-      - "8000:80"
+      - 8000:80
+      - 443:443
     volumes:
       - media:/app/media
       - static:/app/static
+
+  certbot:
+    image: certbot/certbot
+    container_name: portfolio_certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${SSL_EMAIL} -d giannisbratias.xyz --agree-tos
 
   postgres:
     container_name: portfolio_database
@@ -37,7 +46,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - 5432:5432
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
@@ -63,9 +72,9 @@ services:
       - .env
     command: python manage.py runserver 0.0.0.0:8000
     expose:
-      - "8000"
+      - 8000
     ports:
-      - "5060:5050"
+      - 5060:5050
     volumes:
       - .:/app
       - ./logs:/logs
