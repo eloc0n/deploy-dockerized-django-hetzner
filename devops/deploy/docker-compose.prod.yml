@@ -9,7 +9,7 @@ services:
     volumes:
       - ./nginx/nginx-production.conf:/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - static:/app/static
 
   certbot:
     image: certbot/certbot
@@ -18,8 +18,8 @@ services:
     container_name: portfolio_certbot
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --test-cert  --force-renewal --email ${SSL_EMAIL} -d giannisbratias.xyz --agree-tos
+      - static:/data/letsencrypt
+    command: certonly --webroot -w /data/letsencrypt --test-cert  --force-renewal --email ${SSL_EMAIL} -d giannisbratias.xyz --agree-tos
 
   django:
     restart: always
