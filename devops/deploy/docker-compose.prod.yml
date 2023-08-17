@@ -5,8 +5,21 @@ services:
     restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./nginx/nginx-production.conf:/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+
+  certbot:
+    image: certbot/certbot
+    depends_on:
+      - django
+    container_name: portfolio_certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --test-cert --email ${SSL_EMAIL} -d giannisbratias.xyz -d www.giannisbratias.xyz --agree-tos
 
   django:
     restart: always
