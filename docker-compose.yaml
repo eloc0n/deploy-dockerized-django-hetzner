@@ -28,6 +28,8 @@ services:
 
   certbot:
     image: certbot/certbot
+    depends_on:
+      - django
     container_name: portfolio_certbot
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
