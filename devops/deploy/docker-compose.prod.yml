@@ -19,7 +19,7 @@ services:
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /certbot --test-cert  --force-renewal --email ${SSL_EMAIL} -d giannisbratias.xyz --agree-tos
+    command: certonly --webroot -w /var/www/certbot --test-cert  --force-renewal --email ${SSL_EMAIL} -d giannisbratias.xyz --agree-tos
 
   django:
     restart: always
