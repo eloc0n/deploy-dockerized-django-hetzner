@@ -36,8 +36,8 @@ COPY --chown=django:django devops/django/runserver.sh /
 COPY --chown=django:django devops/django/entrypoint.sh /
 
 # Static files
-RUN mkdir -p /app/staticfiles
-RUN chown django:django /app/staticfiles
+RUN mkdir -p /app/static
+RUN chown django:django /app/static
 
 # Logs
 RUN mkdir -p /logs
