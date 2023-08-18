@@ -18,7 +18,8 @@ services:
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - static:/data/letsencrypt
-    command: ["certbot", "--nginx"]
+    entrypoint: ["certbot"]
+    command: ["--nginx"]
     # command: certonly --webroot -w /data/letsencrypt --test-cert  --force-renewal --email ${SSL_EMAIL} -d giannisbratias.xyz --agree-tos
 
   django:
