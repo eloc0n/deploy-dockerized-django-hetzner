@@ -9,7 +9,6 @@ services:
     volumes:
       - ./nginx/nginx-production.conf:/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt
-    command: ["nginx", "-g", "daemon off;"]
 
   certbot:
     image: certbot/certbot
